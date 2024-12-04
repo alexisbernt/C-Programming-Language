@@ -9,6 +9,17 @@
  First declare the data type: 
  Example with int: int myNumbers[] = {25, 50, 75, 100};
 
- char * = 
+### char *
+ char * = A pointer to a char. char * is typically used to represent a string. A string is an array of characters that ends with a null character ('\0'). An array of characters that will be terminated by a null character.
+ You dynamically allocate memory for strings using malloc (allocate memory space)
 
- char ** = 
+### char ** 
+ char ** = a pointer to a char *, meaning it points to a memory location that stores the address of another char. Use When using a list of strings / array of strings. 
+ 
+ Example: char ** array[] = {"a", "b", "c"}; ... char ** ptr = arr; // will point to an array of char * strings
+
+### System Calls
+fork() = creates something (a child) you can make a process with 
+dup() = takes data produced by child and puts it in to parent process 
+wait() 
+exec() = takes the information that is needed 
