@@ -19,7 +19,7 @@ C is super close to the operating system. This is because the kernel is typicall
 
 ### char
 
-### pointer : ??? Are char * datatypes and is it a form of a pointer???
+### pointer : char * is a pointer
  
 ### char *
  char * = A pointer to a char. char * is typically used to represent a string. A string is an array of characters that ends with a null character ('\0'). An array of characters that will be terminated by a null character.
