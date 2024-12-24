@@ -9,14 +9,14 @@ struct user{
   char * fName;
   char * lName;
   char * email;
-  int * phoneNum;
-  int * id;
+  int phoneNum;
+  int id;
 };
 
 // function prototypes
 int getUsers();
-void getLength(char *);
-void * copyString(char *, int);
+void copyString(char * destination, char * source);
+void printString(const char * string);
 
 int main(){
   // explain how to use the program
@@ -25,50 +25,55 @@ int main(){
   // ask the user for a number to symbolize the number of users
   int numUsers = getUsers();
   printf("\nNumber users entered: %d\n\n", numUsers);
-  struct user * list = malloc(numUsers *sizeof(struct user)); // creating a list of users
 
+  // Allocate memory for the list of users
+  struct user * list = malloc(numUsers *sizeof(struct user)); // creating a list of users
+  if (list == NULL){
+    printf("Memory allocation failure. Exiting the program. \n" );
+    return 1;
+  }
+
+  // Input the user data part of the code
   for (int i = 0; i < numUsers; i++){
-    printf("%s", list[i].fName);
     list[i].fName = malloc(UNITS * sizeof(char));
     list[i].lName = malloc(UNITS * sizeof(char));
     list[i].email = malloc(100 * sizeof(char));
-    // list[i].phoneNum = malloc(sizeof(int));
-    list[i].phoneNum = malloc(sizeof(int));
-    list[i].id = malloc(sizeof(int));
 
-    printf("Enter first name: " );
+    // Don't malloc for the integers
+    // list[i].phoneNum = malloc(sizeof(int));
+    // list[i].id = malloc(sizeof(int));
+
+    printf("Enter first name for user %d: " , i + 1);
     scanf("%s", list[i].fName);
-    printf("Enter last name: " );
+    printf("Enter last name for user %d: ", i + 1 );
     scanf("%s", list[i].lName);
-    printf("Enter email: " );
+    printf("Enter email for user %d: ", i + 1 );
     scanf("%s", list[i].email);
-    printf("Enter phone number: " );
-    scanf("%d", list[i].phoneNum);
+    printf("Enter phone number for user %d: ", i + 1 );
+    scanf("%d", &list[i].phoneNum);
     printf("Enter User's ID: " );
-    scanf("%d", list[i].id);
+    scanf("%d", &list[i].id);
 
 }
 
 // Would then print all users
-  printf("\n --- NOW PRINTING ALL USER INFORMATION BACK ---");
+  printf("\n --- NOW PRINTING ALL USER INFORMATION BACK ---\n");
   for(int i = 0; i < numUsers; i++){
     printf("\nFirst Name: \n");
-    printf("%s", list[i].fName);
+    printString(list[i].fName);
     printf("\nLast name: \n");
-    printf("%s", list[i].lName);
+    printString(list[i].lName);
     printf("\nEmail: \n" );
-    printf("%s", list[i].email);
-    printf("\nPhone Number: \n" );
-    printf("%d", list[i].phoneNum);
-    printf("\nUser ID: \n" );
-    printf("%d", list[i].id);
+    printString(list[i].email);
+    printf("\nPhone Number: %d \n", list[i].phoneNum);
+    printf("\nUser ID: %d \n" , list[i].id);
     // would then free()
     free(list[i].fName);
     free(list[i].lName);
     free(list[i].email);
-    free(list[i].phoneNum);
-    free(list[i].id);
 }
+// free the user list
+free(list);
 return 0;
 }
 
@@ -87,18 +92,25 @@ int getUsers(){
   return * user_input;
 }
 
-int getLength(char * string){
-  int stringLength = 0;
-  while (string[stringLength] != '\0'){
-    stringLength++;
-  }
-  return stringLength;
+// Manually print a string
+void printString(const char *string) {
+  // deference operator (*) retrieves the value stored at the memory address the pointer string points to
+    while (*string != '\0') {
+      // putchar prints a single character to the standard output (the console)
+        putchar(*string);
+        string++;
+    }
 }
 
-char * copyString(char * userEntry, int length){
-  char * newString = malloc(length * sizeof(char));
-  newString[length] = '\0';
-  printf("%s", userEntry);
-  scanf("%s", newString);
-  return newString;
+void copyString(char * destination, char * source){
+  // * when used with existing pointer = dereference operator
+  // *[name] accesses the value stored at the memory address the pointer points to
+  // different from &[name] which is the address of the variable x
+  // Therefore: * = dereference , & = address of
+  while (* source != '\0'){
+    * destination = * source;
+    destination ++;
+    source ++;
+  }
+  * destination = '\0'; // Null terminate destination string
 }
